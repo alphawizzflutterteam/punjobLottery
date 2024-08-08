@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:booknplay/Utils/Colors.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import '../../Local_Storage/shared_pre.dart';
 import '../../Models/HomeModel/get_result_model.dart';
@@ -13,6 +16,8 @@ import '../../Services/api_services/apiStrings.dart';
 import '../Notification/notification_view.dart';
 import '../Winner/winner_details_view.dart';
 import '../Winner/winner_view.dart';
+import 'package:http/http.dart' as http;
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -35,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? userId;
   getUser() async {
     userId = await SharedPre.getStringValue('userId');
-    // get();
+    getResult();
   }
   final CarouselController carouselController = CarouselController();
   @override
@@ -546,13 +551,37 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // GetResultModel? getResultModel;
+  // Future<void> getResult() async {
+  //   apiBaseHelper.postAPICall2(getResultAPI).then((getData) {
+  //     setState(() {
+  //       getResultModel = GetResultModel.fromJson(getData);
+  //     });
+  //     //isLoading.value = false;
+  //   });
+  // }
+
   GetResultModel? getResultModel;
-  Future<void> getResult() async {
-    apiBaseHelper.postAPICall2(getResultAPI).then((getData) {
-      setState(() {
-        getResultModel = GetResultModel.fromJson(getData);
-      });
-      //isLoading.value = false;
+  getResult() async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://punjablottery.online/Apicontroller/getResults'));
+    request.body = json.encode({
+      "user_id": userId,
     });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result = await response.stream.bytesToString();
+      var finalResult = GetResultModel.fromJson(jsonDecode(result));
+      setState(() {
+        getResultModel = finalResult;
+      });
+      print("aaaaaaaaaaaaaxxsfrfxa_____________${getResultModel?.data?.lotteries?.length}");
+      Fluttertoast.showToast(msg: "${finalResult.msg}");
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 }

@@ -264,9 +264,7 @@ class _ResultScreenState extends State<ResultScreen> {
       "user_id": userId,
     });
     request.headers.addAll(headers);
-
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       var result = await response.stream.bytesToString();
       var finalResult = GetResultModel.fromJson(jsonDecode(result));
