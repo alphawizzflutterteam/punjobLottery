@@ -110,6 +110,7 @@ class _ResultDetailsScreenState extends State<ResultDetailsScreen> {
   }
 
   GetResultDetailsModel? getResultDetailsModel;
+  String? userId;
 
   getInvatation() async {
     var headers = {
@@ -117,9 +118,8 @@ class _ResultDetailsScreenState extends State<ResultDetailsScreen> {
       'Cookie': 'ci_session=cefaa9477065503c4ca2ed67af58f3c87c6bfab4'
     };
     var request = http.Request('POST', Uri.parse('$baseUrl1/Apicontroller/getResults'));
-    request.body = json.encode({
-      'game_id':widget.gId
-    });
+    request.body =
+        json.encode({"user_id": "$userId", "game_id": "${widget.gId}"});
     print("------Anjalii-------${request.body}----------");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
@@ -130,7 +130,6 @@ class _ResultDetailsScreenState extends State<ResultDetailsScreen> {
         getResultDetailsModel = finalResult;
       });
       Fluttertoast.showToast(msg: "${finalResult.msg}");
-
     }
     else {
       print(response.reasonPhrase);

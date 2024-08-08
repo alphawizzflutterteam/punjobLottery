@@ -83,7 +83,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -109,32 +109,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   String? userId;
   GetTransaction1Model? getTransaction1Model;
-
-  // get() async {
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Cookie': 'ci_session=329e84d8baf5bbe6fc18f412bda3e26574156d56'
-  //   };
-  //   var request = http.Request('POST', Uri.parse('$baseUrl1/Apicontroller/apiUserWithdrawTransactionHistory'));
-  //   request.body = json.encode({
-  //     "user_id":userId
-  //   });
-  //   request.headers.addAll(headers);
-  //
-  //   http.StreamedResponse response = await request.send();
-  //
-  //   if (response.statusCode == 200) {
-  //     var result  = await response.stream.bytesToString();
-  //     var finalResult = GetTransactionModel.fromJson(json.decode(result));
-  //      setState(() {
-  //        getTransactionModel =  finalResult;
-  //      });
-  //   }
-  //   else {
-  //   print(response.reasonPhrase);
-  //   }
-  //
-  // }
 
   getTransactionApi() async {
     var headers = {

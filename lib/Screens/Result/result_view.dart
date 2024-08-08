@@ -215,7 +215,6 @@ class _ResultScreenState extends State<ResultScreen> {
                                                                                       "1st Price : ${getResultModel!.data!.lotteries![index].winners != null && getResultModel!.data!.lotteries![index].winners!.isNotEmpty ? getResultModel!.data!.lotteries![index].winners![0].winnerPrice : 'No winner'}",
                                                                                       style: TextStyle(color: AppColors.black, fontSize: 18),
                                                                                     ),
-                                                                                    // Text("1st Price : ${getResultModel!.data!.lotteries![index].winners![0].winnerPrice}",style: TextStyle(color: AppColors.black,fontSize: 18),),
                                                                                   ],
                                                                                 ),
                                                                                 // myLotteryModel?.data?.lotteries?[index].active == '0' ? SizedBox.shrink():  Text("Betting is Running Now",style: TextStyle(color: AppColors.whit,fontSize: 12),),
@@ -258,22 +257,23 @@ class _ResultScreenState extends State<ResultScreen> {
   GetResultModel? getResultModel;
   getResultDetails() async {
     var headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'ci_session=4b8b6274f26a280877c08cfedab1d6e9b46e4d2d'
+      'Content-Type': 'application/json'
     };
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://punjablottery.online/Apicontroller/getResults'));
-    request.fields.addAll({'user_id': userId ?? ""});
-    print('____request.fields______11${request.fields}_________');
+    var request = http.Request('POST', Uri.parse('https://punjablottery.online/Apicontroller/getResults'));
+    request.body = json.encode({
+      "user_id": userId,
+    });
     request.headers.addAll(headers);
+
     http.StreamedResponse response = await request.send();
+
     if (response.statusCode == 200) {
       var result = await response.stream.bytesToString();
       var finalResult = GetResultModel.fromJson(jsonDecode(result));
-      // print('results   ${finalResult.data?.name}');
       setState(() {
         getResultModel = finalResult;
       });
+      print("aaaaaaaaaaaaaa_____________${getResultModel?.data?.lotteries?.length}");
       Fluttertoast.showToast(msg: "${finalResult.msg}");
     } else {
       print(response.reasonPhrase);

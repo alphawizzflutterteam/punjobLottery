@@ -248,6 +248,11 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter UPI ID';
                           }
+                          String pattern = r'^[\w.-]+@[\w.-]+$';
+                          RegExp regex = RegExp(pattern);
+                          if (!regex.hasMatch(value)) {
+                            return 'Please enter a valid UPI ID';
+                          }
                           return null;
                         },
                       ),
@@ -318,6 +323,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                       const SizedBox(height: 15),
                       TextFormField(
                         keyboardType: TextInputType.number,
+                        maxLength: 20,
                         controller: accountNumberController,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -358,6 +364,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                       const SizedBox(height: 15),
                       TextFormField(
                         controller: ifscController,
+                        maxLength: 15,
                         decoration: const InputDecoration(
                           hintText: 'Enter IFSC Code',
                           border: OutlineInputBorder(),
@@ -469,7 +476,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                                 '1'
                                             ?
                                     Text(
-                                      'UPI',
+                                      'Bank Details',
                                       style:
                                       TextStyle(color: Colors.black),
                                     )
@@ -477,7 +484,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                         .paymentMethod ==
                                         '2'
                                         ? Text(
-                                      'Bank Details',
+                                      'UPI',
                                       style: TextStyle(
                                           color: Colors.black),
                                     )
