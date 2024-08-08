@@ -32,7 +32,6 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
       initialRoute: splashScreen,
       getPages: AllPages.getPages(),
       initialBinding: ScreenBindings(),
-      title: 'Punjab Lottery',
+      title: 'Punjab Jackpot Journey',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
