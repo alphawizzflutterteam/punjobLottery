@@ -213,7 +213,7 @@ class _WinnerScreenState extends State<WinnerScreen> {
                                 //Get.toNamed(winnerScreen,arguments:lotteryModel?.data?.lotteries?[index].gameId );
                               },
                               child: Padding(
-                                padding: const EdgeInsets.all(5.0),
+                                padding: const EdgeInsets.all(2.0),
                                 child: Container(
                                     // height: 50,
                                     width: 160,
@@ -344,7 +344,7 @@ class _WinnerScreenState extends State<WinnerScreen> {
                             ),
                             Container(
                               height:
-                                  MediaQuery.of(context).size.height * 0.52,
+                                  MediaQuery.of(context).size.height * 0.44,
                               child: GridView.builder(
                                 shrinkWrap: true,
                                 physics: AlwaysScrollableScrollPhysics(),
@@ -496,6 +496,7 @@ class _WinnerScreenState extends State<WinnerScreen> {
                                 },
                               ),
                             ),
+                            // SizedBox(height: 100,)
                           ],
                         ),
                       ),
