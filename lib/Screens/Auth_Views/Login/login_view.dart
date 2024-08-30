@@ -1,11 +1,8 @@
-import 'package:booknplay/Constants.dart';
 import 'package:booknplay/Routes/routes.dart';
 import 'package:booknplay/Screens/Auth_Views/Login/login_controller.dart';
 import 'package:booknplay/Utils/Colors.dart';
 import 'package:booknplay/Utils/extentions.dart';
 import 'package:booknplay/Widgets/app_button.dart';
-import 'package:booknplay/Widgets/auth_custom_design.dart';
-import 'package:booknplay/Widgets/commen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -23,9 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _mobile = TextEditingController();
-
-
-
 
   @override
   Widget build(BuildContext context) {

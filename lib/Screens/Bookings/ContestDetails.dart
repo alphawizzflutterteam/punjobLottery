@@ -76,6 +76,7 @@ class _ContestDetailsState extends State<ContestDetails> {
                               //   childAspectRatio: 4/1
                               // ),
                               itemBuilder: (context, i) {
+
                                 return Card(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -147,7 +148,6 @@ class _ContestDetailsState extends State<ContestDetails> {
     };
     var request = http.Request('POST',
         Uri.parse('https://punjablottery.online/Apicontroller/getLotteries'));
-
     request.body =
         json.encode({"user_id": "$userId", "game_id": "${widget.gId}"});
     // request.body = '{"user_id":"$userId""game_id": "${widget.gId}"}';

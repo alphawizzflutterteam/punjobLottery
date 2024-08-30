@@ -20,6 +20,8 @@ class OTPVerificationScreen extends StatefulWidget {
   State<OTPVerificationScreen> createState() => _Otp();
 }
 
+
+
 class _Otp extends State<OTPVerificationScreen> {
   String? newPin;
   @override

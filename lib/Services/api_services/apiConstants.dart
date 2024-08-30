@@ -52,7 +52,5 @@ const String bankDetail =
 ApiBaseHelper apiBaseHelper = ApiBaseHelper();
 const String baseUrl = 'https://punjablottery.online/';
 const String baseUrl1 = 'https://punjablottery.online';
-
-
 const String imageUrl = 'https://punjablottery.online';
 

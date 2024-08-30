@@ -229,7 +229,6 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
   //
   // }
 
-
   get() async {
     var headers = {
       'Content-Type': 'application/json',
