@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-
 import 'package:booknplay/Utils/Colors.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -10,12 +9,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-
 import '../../Local_Storage/shared_pre.dart';
 import '../../Models/HomeModel/lottery_list_model.dart';
-import '../../Models/HomeModel/lottery_model.dart';
 import '../../Services/api_services/apiConstants.dart';
-import '../../Services/api_services/apiStrings.dart';
 import 'package:http/http.dart' as http;
 
 class WinnerScreen extends StatefulWidget {
@@ -50,6 +46,7 @@ class _WinnerScreenState extends State<WinnerScreen> {
     super.dispose();
   }
 
+  String selectedBalanceType = 'balance';
   bool isFirst = true;
   var amount = 0;
   String? purchase;
@@ -58,81 +55,149 @@ class _WinnerScreenState extends State<WinnerScreen> {
     return SafeArea(
       child: Scaffold(
           bottomSheet: Container(
-            height: 82,
+            height: 112,
             color: AppColors.whit,
             child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    const Divider(
-                      color: AppColors.fntClr,
-                    ),
+                    // const Divider(
+                    //   color: AppColors.fntClr,
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Balance:",
-                                style: TextStyle(color: AppColors.fntClr)),
-                            const SizedBox(
-                              width: 10,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Radio(
+                                  value: 'balance',
+                                  groupValue: selectedBalanceType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedBalanceType = value.toString();
+                                    });
+                                  },
+                                ),
+                                const Text(
+                                  "Balance:",
+                                  style: TextStyle(
+                                      color: AppColors.fntClr,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  lotteryDetailsModel
+                                              ?.data?.lottery?.walletBalance !=
+                                          null
+                                      ? int.parse(lotteryDetailsModel
+                                                      ?.data
+                                                      ?.lottery
+                                                      ?.walletBalance ??
+                                                  '0') >
+                                              amount
+                                          ? "${int.parse(lotteryDetailsModel?.data?.lottery?.walletBalance ?? '0') - amount}"
+                                          : '0'
+                                      : "₹ ${lotteryDetailsModel?.data?.lottery?.walletBalance ?? ''}",
+                                  style: const TextStyle(
+                                      color: AppColors.profileColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
                             ),
-                            Text(
-                              lotteryDetailsModel
-                                          ?.data?.lottery?.walletBalance !=
-                                      null
-                                  ? int.parse(lotteryDetailsModel?.data?.lottery
-                                                  ?.walletBalance ??
-                                              '0') >
-                                          amount
-                                      ? "${int.parse(lotteryDetailsModel?.data?.lottery?.walletBalance ?? '0') - amount}"
-                                      : '0'
-                                  : "₹ ${lotteryDetailsModel?.data?.lottery?.walletBalance ?? ''}",
-                                  // : "₹ ${lotteryDetailsModel?.data?.lottery?.walletBalance}",
-                              style: const TextStyle(
-                                  color: AppColors.profileColor),
-                            )
+                            // int.parse(lotteryDetailsModel
+                            //                 ?.data?.lottery?.walletBalance ??
+                            //             '0') >
+                            //         0
+                            //     ? const SizedBox():
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Radio(
+                                  value: 'referEarnBalance',
+                                  groupValue: selectedBalanceType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedBalanceType = value.toString();
+                                    });
+                                  },
+                                ),
+                                const Text(
+                                  "Refer earn balance:",
+                                  style: TextStyle(
+                                      color: AppColors.fntClr,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  lotteryDetailsModel
+                                              ?.data?.lottery?.walletBalance !=
+                                          null
+                                      ? int.parse(lotteryDetailsModel
+                                                      ?.data
+                                                      ?.lottery
+                                                      ?.walletBalance ??
+                                                  '0') >
+                                              amount
+                                          ? "${int.parse(lotteryDetailsModel?.data?.lottery?.walletBalance ?? '0') - amount}"
+                                          : '0'
+                                      : "₹ ${lotteryDetailsModel?.data?.lottery?.walletBalance ?? ''}",
+                                  style: const TextStyle(
+                                      color: AppColors.profileColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                print(amount);
-                                if (purchase == '1') {
-                                  Fluttertoast.showToast(
-                                      msg: "All ready buy!!");
-                                } else if (amount == 0) {
-                                  Fluttertoast.showToast(
-                                      msg: "Please select Ticket");
-                                } else {
-                                  buyLotteryApi();
-                                }
-                                //addTikitList();
-                              },
-                              child: Container(
-                                height: 50,
-                                width: 150,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: AppColors.secondary
-                                    // gradient: RadialGradient(
-                                    //     radius: 1.2,
-                                    //     colors: [
-                                    //       AppColors.primary,
-                                    //       AppColors.secondary
-                                    //     ]),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        lotteryDetailsModel?.data?.lottery!.active == "1"
+                            ? Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      print(amount);
+                                      if (purchase == '1') {
+                                        Fluttertoast.showToast(
+                                            msg: "All ready buy!!");
+                                      } else if (amount == 0) {
+                                        Fluttertoast.showToast(
+                                            msg: "Please select Ticket");
+                                      } else {
+                                        buyLotteryApi();
+                                      }
+                                      //addTikitList();
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width: 120,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: AppColors.secondary
+                                          // gradient: RadialGradient(
+                                          //     radius: 1.2,
+                                          //     colors: [
+                                          //       AppColors.primary,
+                                          //       AppColors.secondary
+                                          //     ]),
+                                          ),
+                                      child: Center(
+                                          child: Text(
+                                        amount == 0 ? "BUY" : "Buy ₹ $amount ",
+                                        style: const TextStyle(
+                                            color: AppColors.whit),
+                                      )),
                                     ),
-                                child: Center(
-                                    child: Text(
-                                  amount == 0 ? "BUY" : "Buy ₹ $amount ",
-                                  style: const TextStyle(color: AppColors.whit),
-                                )),
-                              ),
-                            )
-                          ],
-                        ),
+                                  )
+                                ],
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ],
@@ -170,340 +235,336 @@ class _WinnerScreenState extends State<WinnerScreen> {
           body: lotteryDetailsModel?.data?.lottery == null
               ? const Center(child: CircularProgressIndicator())
               : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 8, right: 8, top: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Entry Fees",
-                            style: TextStyle(
-                                color: AppColors.fntClr,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          // SizedBox(height: 5,),
-                          Text(
-                            "₹${lotteryDetailsModel!.data!.lottery!.ticketPrice}",
-                            style: const TextStyle(
-                                color: AppColors.fntClr,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //SizedBox(height: 20,),
-                    Container(
-                      height: 120,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: lotteryDetailsModel!.data!.lottery!
-                              .winningPositionHistory!.length,
-                          // itemCount:2,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                //Get.toNamed(winnerScreen,arguments:lotteryModel?.data?.lotteries?[index].gameId );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Container(
-                                    // height: 50,
-                                    width: 160,
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/winningOrice.png"),
-                                            fit: BoxFit.fill)),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 18,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 5),
-                                          child: Text(
-                                            "${lotteryDetailsModel!.data!.lottery!.winningPositionHistory![index].winningPosition}",
-                                            style: const TextStyle(
-                                                color: AppColors.red,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 23),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 11,
-                                        ),
-                                        const Text(
-                                          "Winner Price ",
-                                          style: TextStyle(
-                                              color: AppColors.whit,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
-                                        ),
-                                        Text(
-                                          "₹${lotteryDetailsModel!.data!.lottery!.winningPositionHistory![index].winnerPrice}",
-                                          style: const TextStyle(
-                                              color: AppColors.whit,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                            );
-                          }),
-                    ),
-                    Container(
-                      color: AppColors.lotteryColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 8, right: 8, top: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Row(
-                                //   children: [
-                                //     const Text(
-                                //       "Lottery Price",
-                                //       style: TextStyle(
-                                //           color: AppColors.fntClr,
-                                //           fontWeight: FontWeight.bold),
-                                //     ),
-                                //     const SizedBox(
-                                //       width: 5,
-                                //     ),
-                                //     Text(
-                                //       "(₹${lotteryDetailsModel!.data!.lottery!.ticketPrice})",
-                                //       style: const TextStyle(
-                                //           color: AppColors.fntClr,
-                                //           fontWeight: FontWeight.bold),
-                                //     ),
-                                //   ],
-                                // ),
-                                // Row(
-                                //   children: [
-                                //     Text(
-                                //         "Open: ${lotteryDetailsModel!.data!.lottery!.openTime}"),
-                                //     const SizedBox(
-                                //       width: 5,
-                                //     ),
-                                //     Text(
-                                //         "Close ${lotteryDetailsModel!.data!.lottery!.closeTime}"),
-                                //   ],
-                                // ),
-                              ],
+                            const Text(
+                              "Entry Fees",
+                              style: TextStyle(
+                                  color: AppColors.fntClr,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
-                              height: 5,
+                            // SizedBox(height: 5,),
+                            Text(
+                              "₹${lotteryDetailsModel!.data!.lottery!.ticketPrice}",
+                              style: const TextStyle(
+                                  color: AppColors.fntClr,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Open: ${lotteryDetailsModel!.data!.lottery!.openTime}",
-                                  style: TextStyle(color: AppColors.fntClr),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                    "Close: ${lotteryDetailsModel!.data!.lottery!.closeTime}"),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Start: ${DateFormat('dd MMM yyyy').format(DateTime.parse(lotteryDetailsModel!.data!.lottery!.date ?? ""))}",
-                                  style: TextStyle(color: AppColors.fntClr),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                    "End: ${DateFormat('dd MMM yyyy').format(DateTime.parse(lotteryDetailsModel!.data!.lottery!.endDate ?? ""))}"),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.44,
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                physics: AlwaysScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        childAspectRatio: 8 / 4
-                                    ),
-                                itemCount: lotteryDetailsModel!
-                                    .data!.lottery!.lotteryNumbers!.length,
-                                itemBuilder: (context, index) {
-                                  purchase = lotteryDetailsModel!
-                                      .data!
-                                      .lottery
-                                      ?.lotteryNumbers?[index]
-                                      .purchaseStatus;
-                                  String? bookingStatus =
-                                      lotteryDetailsModel!
-                                          .data!
-                                          .lottery
-                                          ?.lotteryNumbers?[index]
-                                          .bookStatus;
-                                  String? bookedUser = lotteryDetailsModel!
-                                      .data!
-                                      .lottery
-                                      ?.lotteryNumbers?[index]
-                                      .userId;
-                                  String? lotteryNum = lotteryDetailsModel!
-                                      .data!
-                                      .lottery!
-                                      .lotteryNumbers![index]
-                                      .lotteryNumber;
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isFirst) {
-                                          _timer = Timer.periodic(
-                                              const Duration(seconds: 1),
-                                              (timer) {
-                                            setState(() {
-                                              _counter--;
-                                            });
-                                            if (_counter == 0) {
-                                              if (!_timer1.isActive) {
-                                                _timer.cancel();
-                                              } else {
-                                                _counter = 60;
-                                              }
-                                            }
-                                          });
-                                          _timer1 = Timer.periodic(
-                                              const Duration(minutes: 1),
-                                              (timer) {
-                                            setState(() {
-                                              _counter1--;
-                                            });
-                                            if (_counter1 == 0) {
-                                              _timer1.cancel();
-                                            }
-                                          });
-                                        }
-                                        if (bookingStatus == "0") {
-                                          if (selectedCardIndexes
-                                              .contains(index)) {
-                                            setState(() {});
-                                            cardData.remove(lotteryNum);
-                                            amount -= int.parse(
-                                                lotteryDetailsModel!.data!
-                                                    .lottery!.ticketPrice!);
-                                            bookLotteryNumberApi(
-                                                lotteryNum!, false);
-                                            selectedCardIndexes
-                                                .remove(index);
-                                          } else {
-                                            setState(() {});
-                                            bookLotteryNumberApi(
-                                                lotteryNum!, true);
-                                            cardData.add(lotteryNum);
-
-                                            amount += int.parse(
-                                                lotteryDetailsModel!
-                                                        .data!
-                                                        .lottery!
-                                                        .ticketPrice ??
-                                                    "0");
-                                            selectedCardIndexes.add(index);
-                                          }
-                                        } else if (bookingStatus == "1" &&
-                                            userId != bookedUser) {
-                                          Fluttertoast.showToast(
-                                              msg: "Already Booked");
-                                        } else {
-                                          setState(() {
-                                            cardData.remove(lotteryNum);
-                                            // amount -= int.parse(
-                                            //     lotteryDetailsModel!.data!
-                                            //         .lottery!.ticketPrice!);
-                                            bookLotteryNumberApi(
-                                                lotteryNum!, false);
-                                            selectedCardIndexes
-                                                .remove(index);
-                                          });
-                                        }
-                                      });
-                                      isFirst = false;
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              const BorderRadius.all(
-                                                  Radius.circular(5)),
-                                          border: Border.all(
-                                              color: AppColors.fntClr),
-                                          color: bookingStatus == "1" &&
-                                                  userId != bookedUser
-                                              ? AppColors.greyColor
-                                              : selectedCardIndexes
-                                                      .contains(index)
-                                                  ? AppColors.secondary
-                                                  : bookingStatus == '1'
-                                                      ? AppColors.secondary
-                                                      : AppColors.whit,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "${lotteryDetailsModel!.data!.lottery?.lotteryNumbers?[index].lotteryNumber}",
+                          ],
+                        ),
+                      ),
+                      //SizedBox(height: 20,),
+                      Container(
+                        height: 120,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: lotteryDetailsModel!
+                                .data!.lottery!.winningPositionHistory!.length,
+                            // itemCount:2,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  //Get.toNamed(winnerScreen,arguments:lotteryModel?.data?.lotteries?[index].gameId );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Container(
+                                      // height: 50,
+                                      width: 160,
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/images/winningOrice.png"),
+                                              fit: BoxFit.fill)),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 18,
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 5),
+                                            child: Text(
+                                              "${lotteryDetailsModel!.data!.lottery!.winningPositionHistory![index].winningPosition}",
+                                              style: const TextStyle(
+                                                  color: AppColors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 23),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 11,
+                                          ),
+                                          const Text(
+                                            "Winner Price ",
                                             style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: selectedCardIndexes
-                                                          .contains(
-                                                              index) ||
-                                                      lotteryDetailsModel!
-                                                              .data!
-                                                              .lottery
-                                                              ?.lotteryNumbers?[
-                                                                  index]
-                                                              .bookStatus ==
-                                                          "1"
-                                                  ? AppColors.whit
-                                                  : null,
+                                                color: AppColors.whit,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14),
+                                          ),
+                                          Text(
+                                            "₹${lotteryDetailsModel!.data!.lottery!.winningPositionHistory![index].winnerPrice}",
+                                            style: const TextStyle(
+                                                color: AppColors.whit,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              );
+                            }),
+                      ),
+                      Container(
+                        color: AppColors.lotteryColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Row(
+                                  //   children: [
+                                  //     const Text(
+                                  //       "Lottery Price",
+                                  //       style: TextStyle(
+                                  //           color: AppColors.fntClr,
+                                  //           fontWeight: FontWeight.bold),
+                                  //     ),
+                                  //     const SizedBox(
+                                  //       width: 5,
+                                  //     ),
+                                  //     Text(
+                                  //       "(₹${lotteryDetailsModel!.data!.lottery!.ticketPrice})",
+                                  //       style: const TextStyle(
+                                  //           color: AppColors.fntClr,
+                                  //           fontWeight: FontWeight.bold),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     Text(
+                                  //         "Open: ${lotteryDetailsModel!.data!.lottery!.openTime}"),
+                                  //     const SizedBox(
+                                  //       width: 5,
+                                  //     ),
+                                  //     Text(
+                                  //         "Close ${lotteryDetailsModel!.data!.lottery!.closeTime}"),
+                                  //   ],
+                                  // ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Open: ${lotteryDetailsModel!.data!.lottery!.openTime}",
+                                    style: TextStyle(color: AppColors.fntClr),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                      "Close: ${lotteryDetailsModel!.data!.lottery!.closeTime}"),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Start: ${DateFormat('dd MMM yyyy').format(DateTime.parse(lotteryDetailsModel!.data!.lottery!.date ?? ""))}",
+                                    style: const TextStyle(
+                                        color: AppColors.fntClr),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                      "End: ${DateFormat('dd MMM yyyy').format(DateTime.parse(lotteryDetailsModel!.data!.lottery!.endDate ?? ""))}"),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.44,
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 8 / 4),
+                                  itemCount: lotteryDetailsModel!
+                                      .data!.lottery!.lotteryNumbers!.length,
+                                  itemBuilder: (context, index) {
+                                    purchase = lotteryDetailsModel!
+                                        .data!
+                                        .lottery
+                                        ?.lotteryNumbers?[index]
+                                        .purchaseStatus;
+                                    String? bookingStatus = lotteryDetailsModel!
+                                        .data!
+                                        .lottery
+                                        ?.lotteryNumbers?[index]
+                                        .bookStatus;
+                                    String? bookedUser = lotteryDetailsModel!
+                                        .data!
+                                        .lottery
+                                        ?.lotteryNumbers?[index]
+                                        .userId;
+                                    String? lotteryNum = lotteryDetailsModel!
+                                        .data!
+                                        .lottery!
+                                        .lotteryNumbers![index]
+                                        .lotteryNumber;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if (isFirst) {
+                                            _timer = Timer.periodic(
+                                                const Duration(seconds: 1),
+                                                (timer) {
+                                              setState(() {
+                                                _counter--;
+                                              });
+                                              if (_counter == 0) {
+                                                if (!_timer1.isActive) {
+                                                  _timer.cancel();
+                                                } else {
+                                                  _counter = 60;
+                                                }
+                                              }
+                                            });
+                                            _timer1 = Timer.periodic(
+                                                const Duration(minutes: 1),
+                                                (timer) {
+                                              setState(() {
+                                                _counter1--;
+                                              });
+                                              if (_counter1 == 0) {
+                                                _timer1.cancel();
+                                              }
+                                            });
+                                          }
+                                          if (bookingStatus == "0") {
+                                            if (selectedCardIndexes
+                                                .contains(index)) {
+                                              setState(() {});
+                                              cardData.remove(lotteryNum);
+                                              amount -= int.parse(
+                                                  lotteryDetailsModel!.data!
+                                                      .lottery!.ticketPrice!);
+                                              bookLotteryNumberApi(
+                                                  lotteryNum!, false);
+                                              selectedCardIndexes.remove(index);
+                                            } else {
+                                              setState(() {});
+                                              bookLotteryNumberApi(
+                                                  lotteryNum!, true);
+                                              cardData.add(lotteryNum);
+
+                                              amount += int.parse(
+                                                  lotteryDetailsModel!
+                                                          .data!
+                                                          .lottery!
+                                                          .ticketPrice ??
+                                                      "0");
+                                              selectedCardIndexes.add(index);
+                                            }
+                                          } else if (bookingStatus == "1" &&
+                                              userId != bookedUser) {
+                                            Fluttertoast.showToast(
+                                                msg: "Already Booked");
+                                          } else {
+                                            setState(() {
+                                              cardData.remove(lotteryNum);
+                                              // amount -= int.parse(
+                                              //     lotteryDetailsModel!.data!
+                                              //         .lottery!.ticketPrice!);
+                                              bookLotteryNumberApi(
+                                                  lotteryNum!, false);
+                                              selectedCardIndexes.remove(index);
+                                            });
+                                          }
+                                        });
+                                        isFirst = false;
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(5)),
+                                            border: Border.all(
+                                                color: AppColors.fntClr),
+                                            color: bookingStatus == "1" &&
+                                                    userId != bookedUser
+                                                ? AppColors.greyColor
+                                                : selectedCardIndexes
+                                                        .contains(index)
+                                                    ? AppColors.secondary
+                                                    : bookingStatus == '1'
+                                                        ? AppColors.secondary
+                                                        : AppColors.whit,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "${lotteryDetailsModel!.data!.lottery?.lotteryNumbers?[index].lotteryNumber}",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                                color: selectedCardIndexes
+                                                            .contains(index) ||
+                                                        lotteryDetailsModel!
+                                                                .data!
+                                                                .lottery
+                                                                ?.lotteryNumbers?[
+                                                                    index]
+                                                                .bookStatus ==
+                                                            "1"
+                                                    ? AppColors.whit
+                                                    : null,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
-                            // SizedBox(height: 100,)
-                          ],
+                              // SizedBox(height: 100,)
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )),
+                    ],
+                  ),
+                )),
     );
   }
 

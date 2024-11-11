@@ -12,15 +12,12 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-
 class OTPVerificationScreen extends StatefulWidget {
   const OTPVerificationScreen({super.key});
 
   @override
   State<OTPVerificationScreen> createState() => _Otp();
 }
-
-
 
 class _Otp extends State<OTPVerificationScreen> {
   String? newPin;
@@ -55,9 +52,8 @@ class _Otp extends State<OTPVerificationScreen> {
                             fontSize: 25),
                       ),
                       const SizedBox(
-                        height: 100,
+                        height: 50,
                       ),
-
                       const Text(
                         'Code has been sent to',
                         style: TextStyle(color: AppColors.whit),
@@ -67,13 +63,17 @@ class _Otp extends State<OTPVerificationScreen> {
                         style: const TextStyle(
                             fontSize: 20, color: AppColors.whit),
                       ),
-                      controller.otp == "null" ?
-                      Text('OTP: ',style: const TextStyle(fontSize: 20,color: AppColors.whit),):
-                      Text(
-                        'OTP: ${controller.data[1].toString()}',
-                        style: const TextStyle(
-                            fontSize: 20, color: AppColors.whit),
-                      ),
+                      // controller.otp == "null"
+                      //     ? Text(
+                      //         'OTP: ',
+                      //         style: const TextStyle(
+                      //             fontSize: 20, color: AppColors.whit),
+                      //       )
+                      //     : Text(
+                      //         'OTP: ${controller.data[1].toString()}',
+                      //         style: const TextStyle(
+                      //             fontSize: 20, color: AppColors.whit),
+                      //       ),
                       const SizedBox(
                         height: 50,
                       ),

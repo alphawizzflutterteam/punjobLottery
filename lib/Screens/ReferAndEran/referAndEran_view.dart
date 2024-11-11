@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:booknplay/Utils/Colors.dart';
 import 'package:booknplay/Widgets/app_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_share/flutter_share.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../Local_Storage/shared_pre.dart';
+import '../../Models/HomeModel/lottery_list_model.dart';
+import '../../Models/ReferEarnModel.dart';
+import '../../Services/api_services/apiConstants.dart';
 
 class ReferAndEran extends StatefulWidget {
   const ReferAndEran({
@@ -30,6 +36,34 @@ class _ReferAndEranState extends State<ReferAndEran> {
     mobile = await SharedPre.getStringValue('userMobile');
     userReferCode = await SharedPre.getStringValue('userReferCode');
     setState(() {});
+    getReferEarn();
+  }
+
+  ReferEarnModel? referEarnModel;
+  String? userId;
+
+  getReferEarn() async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Cookie': 'ci_session=18afbdd33b04ace40a80944d83e9e23e3ab91c3e'
+    };
+    var request = http.Request(
+        'POST', Uri.parse('$baseUrl1/Apicontroller/refererral_lists'));
+    request.body = json.encode({"referral_code": userReferCode});
+    print('_____request refer _____${request.body}_________');
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result = await response.stream.bytesToString();
+      var finalResult = ReferEarnModel.fromJson(json.decode(result));
+      Fluttertoast.showToast(msg: "${finalResult.msg}");
+      setState(() {
+        referEarnModel = finalResult;
+        print("asdadadasad ${referEarnModel?.data?.length}");
+      });
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   @override
@@ -109,7 +143,7 @@ class _ReferAndEranState extends State<ReferAndEran> {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        "${userReferCode}",
+                        "$userReferCode",
                         style: TextStyle(color: AppColors.fntClr),
                       ),
                     ),
@@ -122,16 +156,15 @@ class _ReferAndEranState extends State<ReferAndEran> {
                     decoration: BoxDecoration(
                         color: AppColors.activeBorder,
                         borderRadius:
-                            new BorderRadius.all(const Radius.circular(4.0))),
-                    child: Text(
+                            BorderRadius.all(const Radius.circular(4.0))),
+                    child: const Text(
                       "Tap to copy",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: AppColors.whit),
                     ),
                   ),
                   onPressed: () {
-                    Clipboard.setData(
-                        new ClipboardData(text: "$userReferCode"));
+                    Clipboard.setData(ClipboardData(text: "$userReferCode"));
                     // setSnackbar('Refercode Copied to clipboard');
                     Fluttertoast.showToast(
                         msg: 'Refercode Copied to clipboard',
@@ -147,7 +180,67 @@ class _ReferAndEranState extends State<ReferAndEran> {
                     share(referCode: userReferCode);
                   },
                   title: "Share",
-                )
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                referEarnModel?.data?.length == 0 ||
+                        referEarnModel?.data?.length == null
+                    ? const Center(
+                        child: Text(
+                        "No Data Found",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ))
+                    : Container(
+                        height: 500,
+                        child: ListView.builder(
+                          itemCount: referEarnModel?.data?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              margin: const EdgeInsets.all(8.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: [
+                                    // Image on the left side
+                                    // Text content (time, name, text)
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            referEarnModel
+                                                    ?.data?[index].insertDate ??
+                                                "",
+                                            style: const TextStyle(
+                                                color: Colors.grey),
+                                          ),
+                                          SizedBox(height: 5.0),
+                                          Text(
+                                            referEarnModel
+                                                    ?.data?[index].userName ??
+                                                "",
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5.0),
+                                          Text(referEarnModel
+                                                  ?.data?[index].mobile ??
+                                              ""),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
                 // SimBtn(
                 //   size: 0.8,
                 //   title: "Share",
