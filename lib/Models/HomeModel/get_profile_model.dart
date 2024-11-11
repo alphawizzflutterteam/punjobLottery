@@ -7,7 +7,7 @@ class GetProfileModel {
 
   GetProfileModel.fromJson(Map<String, dynamic> json) {
     profile =
-    json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     msg = json['msg'];
     status = json['status'];
   }
@@ -37,6 +37,7 @@ class Profile {
   String? image;
   Null? address;
   String? walletBalance;
+  String? referEarnBlanace;
   String? holdAmount;
   String? lastUpdate;
   String? insertDate;
@@ -48,26 +49,27 @@ class Profile {
 
   Profile(
       {this.userId,
-        this.userName,
-        this.email,
-        this.dob,
-        this.mobile,
-        this.password,
-        this.apiKey,
-        this.referralCode,
-        this.referredBy,
-        this.securityPin,
-        this.image,
-        this.address,
-        this.walletBalance,
-        this.holdAmount,
-        this.lastUpdate,
-        this.insertDate,
-        this.status,
-        this.verified,
-        this.bettingStatus,
-        this.notificationStatus,
-        this.transferPointStatus});
+      this.userName,
+      this.email,
+      this.dob,
+      this.mobile,
+      this.password,
+      this.apiKey,
+      this.referralCode,
+      this.referredBy,
+      this.securityPin,
+      this.image,
+      this.address,
+      this.walletBalance,
+      this.referEarnBlanace,
+      this.holdAmount,
+      this.lastUpdate,
+      this.insertDate,
+      this.status,
+      this.verified,
+      this.bettingStatus,
+      this.notificationStatus,
+      this.transferPointStatus});
 
   Profile.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -83,6 +85,7 @@ class Profile {
     image = json['image'];
     address = json['address'];
     walletBalance = json['wallet_balance'];
+    referEarnBlanace = json['refer_earn_blanace'];
     holdAmount = json['hold_amount'];
     lastUpdate = json['last_update'];
     insertDate = json['insert_date'];
@@ -108,6 +111,7 @@ class Profile {
     data['image'] = this.image;
     data['address'] = this.address;
     data['wallet_balance'] = this.walletBalance;
+    data['refer_earn_blanace'] = this.referEarnBlanace;
     data['hold_amount'] = this.holdAmount;
     data['last_update'] = this.lastUpdate;
     data['insert_date'] = this.insertDate;

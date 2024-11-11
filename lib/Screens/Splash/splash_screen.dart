@@ -108,15 +108,11 @@ import '../../Local_Storage/shared_pre.dart';
 import '../../Routes/routes.dart';
 
 class SplashScreen extends StatelessWidget {
-   SplashScreen({Key? key}) : super(key: key);
+  SplashScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final heightSize = MediaQuery
-        .sizeOf(context)
-        .height;
-    final widthSize = MediaQuery
-        .sizeOf(context)
-        .width;
+    final heightSize = MediaQuery.sizeOf(context).height;
+    final widthSize = MediaQuery.sizeOf(context).width;
     return GetBuilder(
         init: SplashController(),
         builder: (controller) {
@@ -132,55 +128,47 @@ class SplashScreen extends StatelessWidget {
               splash: 'assets/images/SPLASH LOGO.png',
               screenFunction: () async {
                 return checkLogin();
-
               },
               splashTransition: SplashTransition.scaleTransition,
               pageTransitionType: PageTransitionType.scale,
               animationDuration: Duration(seconds: 2),
               splashIconSize: 250,
               backgroundColor: AppColors.secondary,
-
             ),
           );
-
-
         });
-
   }
+
   String? id;
-   //  checkLogin() async{
-   //   Timer(const Duration(seconds: 3),() async{
-   //     final isLogin = await SharedPre.getBoolValue(SharedPre.isLogin);
-   //
-   //     print('____isLogin______${isLogin}_________');
-   //     if(isLogin){
-   //       Get.offAllNamed(bottomBar);
-   //     }else {
-   //       Get.offAllNamed(loginScreen);
-   //
-   //     }
-   //   });
-   //
-   //
-   //
-   //
-   // }
+  //  checkLogin() async{
+  //   Timer(const Duration(seconds: 3),() async{
+  //     final isLogin = await SharedPre.getBoolValue(SharedPre.isLogin);
+  //
+  //     print('____isLogin______${isLogin}_________');
+  //     if(isLogin){
+  //       Get.offAllNamed(bottomBar);
+  //     }else {
+  //       Get.offAllNamed(loginScreen);
+  //
+  //     }
+  //   });
+  //
+  //
+  //
+  //
+  // }
 
-
-
-   checkLogin() async {
-     final isLogin2 = await SharedPre.getStringValue('userId');
-     Future.delayed(const Duration(seconds: 1), () async {
-       final isLogin = await SharedPre.getStringValue('userId');
-       print('____isLogin______${isLogin}_________');
-       if (isLogin != null && isLogin != '') {
-         // Navigator.push(MaterialPageRoute(builder: (context)=>SearchScreen()));
-         Get.offAllNamed(bottomBar);
-       } else {
-         Get.offAllNamed(loginScreen);
-       }
-     });
-
-   }
-
+  checkLogin() async {
+    final isLogin2 = await SharedPre.getStringValue('userId');
+    Future.delayed(const Duration(seconds: 1), () async {
+      final isLogin = await SharedPre.getStringValue('userId');
+      print('____isLogin______${isLogin}_________');
+      if (isLogin != null && isLogin != '') {
+        // Navigator.push(MaterialPageRoute(builder: (context)=>SearchScreen()));
+        Get.offAllNamed(bottomBar);
+      } else {
+        Get.offAllNamed(loginScreen);
+      }
+    });
+  }
 }

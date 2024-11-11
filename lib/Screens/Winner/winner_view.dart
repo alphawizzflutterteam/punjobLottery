@@ -93,14 +93,16 @@ class _WinnerScreenState extends State<WinnerScreen> {
                                   lotteryDetailsModel
                                               ?.data?.lottery?.walletBalance !=
                                           null
-                                      ? int.parse(lotteryDetailsModel
-                                                      ?.data
-                                                      ?.lottery
-                                                      ?.walletBalance ??
-                                                  '0') >
-                                              amount
-                                          ? "${int.parse(lotteryDetailsModel?.data?.lottery?.walletBalance ?? '0') - amount}"
-                                          : '0'
+                                      ? (selectedBalanceType == 'balance')
+                                          ? (int.parse(lotteryDetailsModel
+                                                          ?.data
+                                                          ?.lottery
+                                                          ?.walletBalance ??
+                                                      '0') >
+                                                  amount)
+                                              ? "${int.parse(lotteryDetailsModel?.data?.lottery?.walletBalance ?? '0') - amount}"
+                                              : '0'
+                                          : "${lotteryDetailsModel?.data?.lottery?.walletBalance ?? '0'}"
                                       : "₹ ${lotteryDetailsModel?.data?.lottery?.walletBalance ?? ''}",
                                   style: const TextStyle(
                                       color: AppColors.profileColor,
@@ -134,17 +136,21 @@ class _WinnerScreenState extends State<WinnerScreen> {
                                 const SizedBox(width: 10),
                                 Text(
                                   lotteryDetailsModel
-                                              ?.data?.lottery?.walletBalance !=
+                                              ?.data?.lottery?.referBalance !=
                                           null
-                                      ? int.parse(lotteryDetailsModel
-                                                      ?.data
-                                                      ?.lottery
-                                                      ?.walletBalance ??
-                                                  '0') >
-                                              amount
-                                          ? "${int.parse(lotteryDetailsModel?.data?.lottery?.walletBalance ?? '0') - amount}"
-                                          : '0'
-                                      : "₹ ${lotteryDetailsModel?.data?.lottery?.walletBalance ?? ''}",
+                                      ? (selectedBalanceType ==
+                                              "referEarnBalance")
+                                          ? int.parse(lotteryDetailsModel
+                                                          ?.data
+                                                          ?.lottery
+                                                          ?.referBalance!
+                                                          .split('.')[0] ??
+                                                      '0') >
+                                                  amount
+                                              ? "${int.parse(lotteryDetailsModel?.data?.lottery?.referBalance!.split('.')[0] ?? '0') - amount}"
+                                              : '0'
+                                          : "${lotteryDetailsModel?.data?.lottery?.referBalance!.split('.')[0] ?? '0'}"
+                                      : "₹ ${lotteryDetailsModel?.data?.lottery?.referBalance ?? ''}",
                                   style: const TextStyle(
                                       color: AppColors.profileColor,
                                       fontWeight: FontWeight.w600),
@@ -598,6 +604,7 @@ class _WinnerScreenState extends State<WinnerScreen> {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var result = await response.stream.bytesToString();
+      print(result);
       var finalResult = LotteryListModel.fromJson(json.decode(result));
       Fluttertoast.showToast(msg: "${finalResult.msg}");
       setState(() {
@@ -622,7 +629,9 @@ class _WinnerScreenState extends State<WinnerScreen> {
       "amount": amount,
       "lottery_numbers": cardData,
       "order_number": "2675db01c965",
-      "txn_id": "2675db01c965ijbdhgd"
+      "txn_id": "2675db01c965ijbdhgd",
+      "payment_method":
+          selectedBalanceType == "referEarnBalance" ? "refer_n_earn" : "wallet"
     });
     print("here is a params___________${request.body}");
     request.headers.addAll(headers);

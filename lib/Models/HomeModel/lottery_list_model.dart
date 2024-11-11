@@ -3,11 +3,12 @@
 
 class LotteryListModel {
   LotteryListModel({
-      String? msg, 
-      Data? data,}){
+    String? msg,
+    Data? data,
+  }) {
     _msg = msg;
     _data = data;
-}
+  }
 
   LotteryListModel.fromJson(dynamic json) {
     _msg = json['msg'];
@@ -15,11 +16,14 @@ class LotteryListModel {
   }
   String? _msg;
   Data? _data;
-LotteryListModel copyWith({  String? msg,
-  Data? data,
-}) => LotteryListModel(  msg: msg ?? _msg,
-  data: data ?? _data,
-);
+  LotteryListModel copyWith({
+    String? msg,
+    Data? data,
+  }) =>
+      LotteryListModel(
+        msg: msg ?? _msg,
+        data: data ?? _data,
+      );
   String? get msg => _msg;
   Data? get data => _data;
 
@@ -31,7 +35,6 @@ LotteryListModel copyWith({  String? msg,
     }
     return map;
   }
-
 }
 
 /// name : "Matka Lottery"
@@ -39,23 +42,28 @@ LotteryListModel copyWith({  String? msg,
 
 class Data {
   Data({
-      String? name, 
-      Lottery? lottery,}){
+    String? name,
+    Lottery? lottery,
+  }) {
     _name = name;
     _lottery = lottery;
-}
+  }
 
   Data.fromJson(dynamic json) {
     _name = json['name'];
-    _lottery = json['lottery'] != null ? Lottery.fromJson(json['lottery']) : null;
+    _lottery =
+        json['lottery'] != null ? Lottery.fromJson(json['lottery']) : null;
   }
   String? _name;
   Lottery? _lottery;
-Data copyWith({  String? name,
-  Lottery? lottery,
-}) => Data(  name: name ?? _name,
-  lottery: lottery ?? _lottery,
-);
+  Data copyWith({
+    String? name,
+    Lottery? lottery,
+  }) =>
+      Data(
+        name: name ?? _name,
+        lottery: lottery ?? _lottery,
+      );
   String? get name => _name;
   Lottery? get lottery => _lottery;
 
@@ -67,7 +75,6 @@ Data copyWith({  String? name,
     }
     return map;
   }
-
 }
 
 /// game_id : "62"
@@ -94,27 +101,29 @@ Data copyWith({  String? name,
 
 class Lottery {
   Lottery({
-      String? gameId, 
-      String? gameName, 
-      String? gameNameHindi, 
-      String? openTime, 
-      String? openTimeSort, 
-      String? closeTime, 
-      String? status, 
-      String? resultStatus, 
-      String? marketStatus, 
-      String? marketOffDay, 
-      String? date, 
-      String? endDate, 
-      String? resultDate, 
-      String? resultTime, 
-      String? ticketPrice, 
-      String? image, 
-      String? lotteryNumber, 
-      String? active, 
-      String? walletBalance, 
-      List<LotteryNumbers>? lotteryNumbers, 
-      List<WinningPositionHistory>? winningPositionHistory,}){
+    String? gameId,
+    String? gameName,
+    String? gameNameHindi,
+    String? openTime,
+    String? openTimeSort,
+    String? closeTime,
+    String? status,
+    String? resultStatus,
+    String? marketStatus,
+    String? marketOffDay,
+    String? date,
+    String? endDate,
+    String? resultDate,
+    String? resultTime,
+    String? ticketPrice,
+    String? image,
+    String? lotteryNumber,
+    String? active,
+    String? walletBalance,
+    String? referBalance,
+    List<LotteryNumbers>? lotteryNumbers,
+    List<WinningPositionHistory>? winningPositionHistory,
+  }) {
     _gameId = gameId;
     _gameName = gameName;
     _gameNameHindi = gameNameHindi;
@@ -135,8 +144,9 @@ class Lottery {
     _active = active;
     _walletBalance = walletBalance;
     _lotteryNumbers = lotteryNumbers;
+    _referBalance = referBalance;
     _winningPositionHistory = winningPositionHistory;
-}
+  }
 
   Lottery.fromJson(dynamic json) {
     _gameId = json['game_id'];
@@ -158,6 +168,7 @@ class Lottery {
     _lotteryNumber = json['lottery_number'];
     _active = json['active'];
     _walletBalance = json['wallet_balance'];
+    _referBalance = json['refer_balance'];
     if (json['lottery_numbers'] != null) {
       _lotteryNumbers = [];
       json['lottery_numbers'].forEach((v) {
@@ -190,51 +201,57 @@ class Lottery {
   String? _lotteryNumber;
   String? _active;
   String? _walletBalance;
+  String? _referBalance;
   List<LotteryNumbers>? _lotteryNumbers;
   List<WinningPositionHistory>? _winningPositionHistory;
-Lottery copyWith({  String? gameId,
-  String? gameName,
-  String? gameNameHindi,
-  String? openTime,
-  String? openTimeSort,
-  String? closeTime,
-  String? status,
-  String? resultStatus,
-  String? marketStatus,
-  String? marketOffDay,
-  String? date,
-  String? endDate,
-  String? resultDate,
-  String? resultTime,
-  String? ticketPrice,
-  String? image,
-  String? lotteryNumber,
-  String? active,
-  String? walletBalance,
-  List<LotteryNumbers>? lotteryNumbers,
-  List<WinningPositionHistory>? winningPositionHistory,
-}) => Lottery(  gameId: gameId ?? _gameId,
-  gameName: gameName ?? _gameName,
-  gameNameHindi: gameNameHindi ?? _gameNameHindi,
-  openTime: openTime ?? _openTime,
-  openTimeSort: openTimeSort ?? _openTimeSort,
-  closeTime: closeTime ?? _closeTime,
-  status: status ?? _status,
-  resultStatus: resultStatus ?? _resultStatus,
-  marketStatus: marketStatus ?? _marketStatus,
-  marketOffDay: marketOffDay ?? _marketOffDay,
-  date: date ?? _date,
-  endDate: endDate ?? _endDate,
-  resultDate: resultDate ?? _resultDate,
-  resultTime: resultTime ?? _resultTime,
-  ticketPrice: ticketPrice ?? _ticketPrice,
-  image: image ?? _image,
-  lotteryNumber: lotteryNumber ?? _lotteryNumber,
-  active: active ?? _active,
-  walletBalance: walletBalance ?? _walletBalance,
-  lotteryNumbers: lotteryNumbers ?? _lotteryNumbers,
-  winningPositionHistory: winningPositionHistory ?? _winningPositionHistory,
-);
+  Lottery copyWith({
+    String? gameId,
+    String? gameName,
+    String? gameNameHindi,
+    String? openTime,
+    String? openTimeSort,
+    String? closeTime,
+    String? status,
+    String? resultStatus,
+    String? marketStatus,
+    String? marketOffDay,
+    String? date,
+    String? endDate,
+    String? resultDate,
+    String? resultTime,
+    String? ticketPrice,
+    String? image,
+    String? lotteryNumber,
+    String? active,
+    String? walletBalance,
+    String? referBalance,
+    List<LotteryNumbers>? lotteryNumbers,
+    List<WinningPositionHistory>? winningPositionHistory,
+  }) =>
+      Lottery(
+          gameId: gameId ?? _gameId,
+          gameName: gameName ?? _gameName,
+          gameNameHindi: gameNameHindi ?? _gameNameHindi,
+          openTime: openTime ?? _openTime,
+          openTimeSort: openTimeSort ?? _openTimeSort,
+          closeTime: closeTime ?? _closeTime,
+          status: status ?? _status,
+          resultStatus: resultStatus ?? _resultStatus,
+          marketStatus: marketStatus ?? _marketStatus,
+          marketOffDay: marketOffDay ?? _marketOffDay,
+          date: date ?? _date,
+          endDate: endDate ?? _endDate,
+          resultDate: resultDate ?? _resultDate,
+          resultTime: resultTime ?? _resultTime,
+          ticketPrice: ticketPrice ?? _ticketPrice,
+          image: image ?? _image,
+          lotteryNumber: lotteryNumber ?? _lotteryNumber,
+          active: active ?? _active,
+          walletBalance: walletBalance ?? _walletBalance,
+          lotteryNumbers: lotteryNumbers ?? _lotteryNumbers,
+          winningPositionHistory:
+              winningPositionHistory ?? _winningPositionHistory,
+          referBalance: referBalance ?? _referBalance);
   String? get gameId => _gameId;
   String? get gameName => _gameName;
   String? get gameNameHindi => _gameNameHindi;
@@ -254,8 +271,10 @@ Lottery copyWith({  String? gameId,
   String? get lotteryNumber => _lotteryNumber;
   String? get active => _active;
   String? get walletBalance => _walletBalance;
+  String? get referBalance => _referBalance;
   List<LotteryNumbers>? get lotteryNumbers => _lotteryNumbers;
-  List<WinningPositionHistory>? get winningPositionHistory => _winningPositionHistory;
+  List<WinningPositionHistory>? get winningPositionHistory =>
+      _winningPositionHistory;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -278,15 +297,16 @@ Lottery copyWith({  String? gameId,
     map['lottery_number'] = _lotteryNumber;
     map['active'] = _active;
     map['wallet_balance'] = _walletBalance;
+    map['refer_balance'] = _referBalance;
     if (_lotteryNumbers != null) {
       map['lottery_numbers'] = _lotteryNumbers?.map((v) => v.toJson()).toList();
     }
     if (_winningPositionHistory != null) {
-      map['winning_position_history'] = _winningPositionHistory?.map((v) => v.toJson()).toList();
+      map['winning_position_history'] =
+          _winningPositionHistory?.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }
 
 /// id : "110"
@@ -297,17 +317,18 @@ Lottery copyWith({  String? gameId,
 
 class WinningPositionHistory {
   WinningPositionHistory({
-      String? id, 
-      String? gameId, 
-      String? winnerPrice, 
-      String? winningPosition, 
-      String? lotteryNo,}){
+    String? id,
+    String? gameId,
+    String? winnerPrice,
+    String? winningPosition,
+    String? lotteryNo,
+  }) {
     _id = id;
     _gameId = gameId;
     _winnerPrice = winnerPrice;
     _winningPosition = winningPosition;
     _lotteryNo = lotteryNo;
-}
+  }
 
   WinningPositionHistory.fromJson(dynamic json) {
     _id = json['id'];
@@ -321,17 +342,20 @@ class WinningPositionHistory {
   String? _winnerPrice;
   String? _winningPosition;
   String? _lotteryNo;
-WinningPositionHistory copyWith({  String? id,
-  String? gameId,
-  String? winnerPrice,
-  String? winningPosition,
-  String? lotteryNo,
-}) => WinningPositionHistory(  id: id ?? _id,
-  gameId: gameId ?? _gameId,
-  winnerPrice: winnerPrice ?? _winnerPrice,
-  winningPosition: winningPosition ?? _winningPosition,
-  lotteryNo: lotteryNo ?? _lotteryNo,
-);
+  WinningPositionHistory copyWith({
+    String? id,
+    String? gameId,
+    String? winnerPrice,
+    String? winningPosition,
+    String? lotteryNo,
+  }) =>
+      WinningPositionHistory(
+        id: id ?? _id,
+        gameId: gameId ?? _gameId,
+        winnerPrice: winnerPrice ?? _winnerPrice,
+        winningPosition: winningPosition ?? _winningPosition,
+        lotteryNo: lotteryNo ?? _lotteryNo,
+      );
   String? get id => _id;
   String? get gameId => _gameId;
   String? get winnerPrice => _winnerPrice;
@@ -347,7 +371,6 @@ WinningPositionHistory copyWith({  String? id,
     map['lottery_no'] = _lotteryNo;
     return map;
   }
-
 }
 
 /// id : "172"
@@ -359,19 +382,20 @@ WinningPositionHistory copyWith({  String? id,
 
 class LotteryNumbers {
   LotteryNumbers({
-      String? id, 
-      String? gameId, 
-      String? lotteryNumber, 
-      String? userId, 
-      String? bookStatus, 
-      String? purchaseStatus,}){
+    String? id,
+    String? gameId,
+    String? lotteryNumber,
+    String? userId,
+    String? bookStatus,
+    String? purchaseStatus,
+  }) {
     _id = id;
     _gameId = gameId;
     _lotteryNumber = lotteryNumber;
     _userId = userId;
     _bookStatus = bookStatus;
     _purchaseStatus = purchaseStatus;
-}
+  }
 
   LotteryNumbers.fromJson(dynamic json) {
     _id = json['id'];
@@ -387,19 +411,22 @@ class LotteryNumbers {
   String? _userId;
   String? _bookStatus;
   String? _purchaseStatus;
-LotteryNumbers copyWith({  String? id,
-  String? gameId,
-  String? lotteryNumber,
-  String? userId,
-  String? bookStatus,
-  String? purchaseStatus,
-}) => LotteryNumbers(  id: id ?? _id,
-  gameId: gameId ?? _gameId,
-  lotteryNumber: lotteryNumber ?? _lotteryNumber,
-  userId: userId ?? _userId,
-  bookStatus: bookStatus ?? _bookStatus,
-  purchaseStatus: purchaseStatus ?? _purchaseStatus,
-);
+  LotteryNumbers copyWith({
+    String? id,
+    String? gameId,
+    String? lotteryNumber,
+    String? userId,
+    String? bookStatus,
+    String? purchaseStatus,
+  }) =>
+      LotteryNumbers(
+        id: id ?? _id,
+        gameId: gameId ?? _gameId,
+        lotteryNumber: lotteryNumber ?? _lotteryNumber,
+        userId: userId ?? _userId,
+        bookStatus: bookStatus ?? _bookStatus,
+        purchaseStatus: purchaseStatus ?? _purchaseStatus,
+      );
   String? get id => _id;
   String? get gameId => _gameId;
   String? get lotteryNumber => _lotteryNumber;
@@ -417,5 +444,4 @@ LotteryNumbers copyWith({  String? id,
     map['purchase_status'] = _purchaseStatus;
     return map;
   }
-
 }

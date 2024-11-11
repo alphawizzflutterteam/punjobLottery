@@ -70,6 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var request = http.Request(
         'POST', Uri.parse('$baseUrl1/Apicontroller/apiGetProfile'));
     request.body = json.encode({"user_id": userId.toString()});
+    print("anjali profile balance____${request.body}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -313,19 +314,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Image.asset(
-                                                      "assets/images/Refer & Earn.png",
-                                                      height: 20,
-                                                      color: AppColors
-                                                          .profileColor,
-                                                    ),
-                                                    const Text(
-                                                      "Refer & Earn ",
-                                                      style: TextStyle(
-                                                          color:
-                                                              AppColors.fntClr,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Image.asset(
+                                                              "assets/images/Refer & Earn.png",
+                                                              height: 20,
+                                                              color: AppColors
+                                                                  .profileColor,
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 5),
+                                                            const Text(
+                                                              "Refer & Earn",
+                                                              style: TextStyle(
+                                                                color: AppColors
+                                                                    .fntClr,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Image.asset(
+                                                              "assets/images/Balance.png",
+                                                              height: 20,
+                                                              color: AppColors
+                                                                  .profileColor,
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 5), //
+
+                                                            const Text(
+                                                              "Balance : ",
+                                                              style: TextStyle(
+                                                                color: AppColors
+                                                                    .fntClr,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 5),
+                                                            const SizedBox(
+                                                                width: 5),
+                                                            Text(
+                                                              "${getProfileModel?.profile?.referEarnBlanace ?? ''}", // Dynamic text
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: AppColors
+                                                                    .profileColor,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
                                                     ),
                                                     const Icon(
                                                       Icons
@@ -333,9 +384,103 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       color:
                                                           AppColors.greyColor,
                                                       size: 17,
-                                                    )
+                                                    ),
                                                   ],
                                                 ),
+                                                // child: Row(
+                                                //   mainAxisAlignment:
+                                                //       MainAxisAlignment
+                                                //           .spaceBetween,
+                                                //   children: [
+                                                //     Column(
+                                                //       crossAxisAlignment:
+                                                //           CrossAxisAlignment
+                                                //               .start,
+                                                //       children: [
+                                                //         Row(
+                                                //           children: [
+                                                //             Image.asset(
+                                                //               "assets/images/Refer & Earn.png",
+                                                //               height: 20,
+                                                //               color: AppColors
+                                                //                   .profileColor,
+                                                //             ),
+                                                //             const SizedBox(
+                                                //                 width: 5),
+                                                //             const Text(
+                                                //               "Refer & Earn",
+                                                //               style: TextStyle(
+                                                //                 color: AppColors
+                                                //                     .fntClr,
+                                                //                 fontWeight:
+                                                //                     FontWeight
+                                                //                         .bold,
+                                                //               ),
+                                                //             ),
+                                                //           ],
+                                                //         ),
+                                                //         Row(
+                                                //           children: [
+                                                //             const Text(
+                                                //               "Balance : ", // Additional text
+                                                //               style: TextStyle(
+                                                //                 color: AppColors
+                                                //                     .fntClr,
+                                                //               ),
+                                                //             ),
+                                                //             const SizedBox(
+                                                //                 width:
+                                                //                     5), // Add spacing if needed
+                                                //             Text(
+                                                //               "${getProfileModel?.profile?.referEarnBlanace ?? ''}", // Dynamic text
+                                                //               style:
+                                                //                   const TextStyle(
+                                                //                 color: AppColors
+                                                //                     .profileColor,
+                                                //               ),
+                                                //             ),
+                                                //           ],
+                                                //         ),
+                                                //       ],
+                                                //     ),
+                                                //     const Icon(
+                                                //       Icons
+                                                //           .arrow_forward_ios_outlined,
+                                                //       color:
+                                                //           AppColors.greyColor,
+                                                //       size: 17,
+                                                //     ),
+                                                //   ],
+                                                // ),
+
+                                                // child: Row(
+                                                //   mainAxisAlignment:
+                                                //       MainAxisAlignment
+                                                //           .spaceBetween,
+                                                //   children: [
+                                                //     Image.asset(
+                                                //       "assets/images/Refer & Earn.png",
+                                                //       height: 20,
+                                                //       color: AppColors
+                                                //           .profileColor,
+                                                //     ),
+                                                //     const Text(
+                                                //       "Refer & Earn ",
+                                                //       style: TextStyle(
+                                                //           color:
+                                                //               AppColors.fntClr,
+                                                //           fontWeight:
+                                                //               FontWeight.bold),
+                                                //     ),
+                                                //     const Icon(
+                                                //       Icons
+                                                //           .arrow_forward_ios_outlined,
+                                                //       color:
+                                                //           AppColors.greyColor,
+                                                //       size: 17,
+                                                //     )
+                                                //   ],
+                                                // ),
                                               ),
                                             ),
                                           ),
