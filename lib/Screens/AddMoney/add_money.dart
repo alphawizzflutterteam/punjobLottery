@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
@@ -672,6 +673,65 @@ class _AddMoneyState extends State<AddMoney> {
                           padding: const EdgeInsets.all(8.0),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
+                            // child: Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     Row(
+                            //       mainAxisAlignment:
+                            //           MainAxisAlignment.spaceBetween,
+                            //       children: [
+                            //         getFundModel!.addFund![i].name == ""
+                            //             ? Text("Name")
+                            //             : Text(
+                            //                 "${getFundModel!.addFund![i].name}"),
+                            //         getFundModel!.addFund![i].requestStatus ==
+                            //                 '0'
+                            //             ? Text(
+                            //                 'Pending',
+                            //                 style:
+                            //                     TextStyle(color: Colors.yellow),
+                            //               )
+                            //             : getFundModel!.addFund![i]
+                            //                         .requestStatus ==
+                            //                     '1'
+                            //                 ? Text(
+                            //                     'Rejected',
+                            //                     style: TextStyle(
+                            //                         color: Colors.red),
+                            //                   )
+                            //                 : Text(
+                            //                     'Accepted',
+                            //                     style: TextStyle(
+                            //                         color: Colors.green),
+                            //                   ),
+                            //       ],
+                            //     ),
+                            //     SizedBox(height: 5),
+                            //     Row(
+                            //       mainAxisAlignment:
+                            //           MainAxisAlignment.spaceBetween,
+                            //       children: [
+                            //         Text(
+                            //           "₹${getFundModel!.addFund![i].requestAmount}",
+                            //           style: TextStyle(fontSize: 14),
+                            //         ),
+                            //         Text(
+                            //           getFundModel!.addFund![i].insertDate !=
+                            //                   null
+                            //               ? DateFormat('dd/MM/yy hh:mm a')
+                            //                   .format(
+                            //                   DateTime.parse(getFundModel!
+                            //                       .addFund![i].insertDate!),
+                            //                 )
+                            //               : 'N/A',
+                            //           style: TextStyle(fontSize: 14),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //     SizedBox(height: 5),
+                            //   ],
+                            // ),
+
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -705,13 +765,20 @@ class _AddMoneyState extends State<AddMoney> {
                                               )
                                   ],
                                 ),
+
                                 SizedBox(
-                                  height: 3,
+                                  height: 5,
                                 ),
                                 Text(
-                                    "${getFundModel!.addFund![i].requestAmount}"),
+                                    " ₹${getFundModel!.addFund![i].requestAmount}"),
                                 SizedBox(
-                                  height: 3,
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  " Date : ${getFundModel!.addFund![i].insertDate != null ? DateFormat('dd-MM-yyyy').format(DateTime.parse(getFundModel!.addFund![i].insertDate!)) : 'N/A'}",
                                 ),
                                 // Text(
                                 //     "₹ ${getFundModel!.addFund![i].requestAmount}"),

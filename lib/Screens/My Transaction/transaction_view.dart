@@ -4,6 +4,7 @@ import 'package:booknplay/Utils/Colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import '../../Local_Storage/shared_pre.dart';
 import '../../Models/HomeModel/GetTransaction1Model.dart';
 import '../../Models/HomeModel/GetTransaction1Model.dart';
@@ -84,23 +85,104 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                     padding: EdgeInsets.all(8.0),
                                     child: Padding(
                                       padding: EdgeInsets.all(8.0),
+                                      // child: Column(
+                                      //   crossAxisAlignment:
+                                      //       CrossAxisAlignment.start,
+                                      //   children: [
+                                      //     Row(
+                                      //       mainAxisAlignment:
+                                      //           MainAxisAlignment.spaceBetween,
+                                      //       children: [
+                                      //         Text(
+                                      //           "₹${getTransaction1Model!.walletTransaction![i].amount}",
+                                      //           style: TextStyle(
+                                      //             fontSize: 22,
+                                      //             fontWeight: FontWeight.w600,
+                                      //             color: getTransaction1Model!
+                                      //                         .walletTransaction![
+                                      //                             i]
+                                      //                         .amountType ==
+                                      //                     "1"
+                                      //                 ? Colors.green
+                                      //                 : Colors.red,
+                                      //           ),
+                                      //         ),
+                                      //         // Text(
+                                      //         //   " ₹ ${getTransaction1Model!.walletTransaction![i].amount}",
+                                      //         //   style: TextStyle(fontSize: 16),
+                                      //         // ),
+                                      //         Text(
+                                      //           getTransaction1Model!
+                                      //                       .walletTransaction![
+                                      //                           i]
+                                      //                       .insertDate !=
+                                      //                   null
+                                      //               ? DateFormat(
+                                      //                       'dd/MM/yy hh:mm a')
+                                      //                   .format(
+                                      //                   DateTime.parse(
+                                      //                       getTransaction1Model!
+                                      //                           .walletTransaction![
+                                      //                               i]
+                                      //                           .insertDate!),
+                                      //                 )
+                                      //               : 'N/A',
+                                      //           style: TextStyle(
+                                      //             fontSize: 14,
+                                      //           ),
+                                      //         ),
+                                      //       ],
+                                      //     ),
+                                      //     SizedBox(height: 5),
+                                      //     Text(
+                                      //       "${getTransaction1Model!.walletTransaction![i].transactionNote}",
+                                      //       maxLines: 2,
+                                      //       overflow: TextOverflow.ellipsis,
+                                      //       style: TextStyle(
+                                      //         fontSize: 14,
+                                      //       ),
+                                      //     ),
+                                      //     SizedBox(height: 5),
+                                      //     Text(
+                                      //       " ${getTransaction1Model!.walletTransaction![i].gameName}",
+                                      //       maxLines: 2,
+                                      //       overflow: TextOverflow.ellipsis,
+                                      //       style: TextStyle(fontSize: 14),
+                                      //     ),
+                                      //   ],
+                                      // ),
+
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              "Amount : ₹ ${getTransaction1Model!.walletTransaction![i].amount}"),
-                                          SizedBox(
-                                            height: 5,
+                                            " ₹${getTransaction1Model!.walletTransaction![i].amount}",
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w600,
+                                              color: getTransaction1Model!
+                                                          .walletTransaction![i]
+                                                          .amountType ==
+                                                      "1"
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                            ),
                                           ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                              " ID : ${getTransaction1Model!.walletTransaction![i].transactionId}"),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            " Date : ${getTransaction1Model!.walletTransaction![i].insertDate != null ? DateFormat('dd-MM-yyyy').format(DateTime.parse(getTransaction1Model!.walletTransaction![i].insertDate!)) : 'N/A'}",
+                                          ),
+                                          SizedBox(height: 5),
                                           Text(
                                               "${getTransaction1Model!.walletTransaction![i].transactionNote}"),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
+                                          SizedBox(height: 5),
                                           Text(
-                                              "${getTransaction1Model!.walletTransaction![i].gameName}"),
-
+                                              " ${getTransaction1Model!.walletTransaction![i].gameName}"),
+                                          SizedBox(height: 5),
                                         ],
                                       ),
                                     ),

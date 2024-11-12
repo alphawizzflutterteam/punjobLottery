@@ -97,8 +97,6 @@
 //   }
 // }
 
-
-
 class GetTransaction1Model {
   List<WalletTransaction>? walletTransaction;
   String? msg;
@@ -134,6 +132,7 @@ class WalletTransaction {
   String? userId;
   String? amount;
   String? transactionType;
+  String? amountType;
   String? transactionNote;
   String? transferNote;
   String? amountStatus;
@@ -148,26 +147,28 @@ class WalletTransaction {
 
   WalletTransaction(
       {this.transactionId,
-        this.userId,
-        this.amount,
-        this.transactionType,
-        this.transactionNote,
-        this.transferNote,
-        this.amountStatus,
-        this.insertDate,
-        this.txRequestNumber,
-        this.txnId,
-        this.txnRef,
-        this.openResultToken,
-        this.closeResultToken,
-        this.bidTxId,
-        this.gameName});
+      this.userId,
+      this.amount,
+      this.transactionType,
+      this.amountType,
+      this.transactionNote,
+      this.transferNote,
+      this.amountStatus,
+      this.insertDate,
+      this.txRequestNumber,
+      this.txnId,
+      this.txnRef,
+      this.openResultToken,
+      this.closeResultToken,
+      this.bidTxId,
+      this.gameName});
 
   WalletTransaction.fromJson(Map<String, dynamic> json) {
     transactionId = json['transaction_id'];
     userId = json['user_id'];
     amount = json['amount'];
     transactionType = json['transaction_type'];
+    amountType = json['amount_type'];
     transactionNote = json['transaction_note'];
     transferNote = json['transfer_note'];
     amountStatus = json['amount_status'];
@@ -187,6 +188,7 @@ class WalletTransaction {
     data['user_id'] = this.userId;
     data['amount'] = this.amount;
     data['transaction_type'] = this.transactionType;
+    data['amount_type'] = this.amountType;
     data['transaction_note'] = this.transactionNote;
     data['transfer_note'] = this.transferNote;
     data['amount_status'] = this.amountStatus;

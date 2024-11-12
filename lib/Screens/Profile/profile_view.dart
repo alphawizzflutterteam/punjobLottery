@@ -353,8 +353,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   .profileColor,
                                                             ),
                                                             const SizedBox(
-                                                                width: 5), //
-
+                                                                width: 5),
                                                             const Text(
                                                               "Balance : ",
                                                               style: TextStyle(
@@ -367,7 +366,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             const SizedBox(
                                                                 width: 5),
                                                             Text(
-                                                              "${getProfileModel?.profile?.referEarnBlanace ?? ''}", // Dynamic text
+                                                              "${getProfileModel?.profile?.referEarnBlanace ?? ''}",
                                                               style:
                                                                   const TextStyle(
                                                                 color: AppColors

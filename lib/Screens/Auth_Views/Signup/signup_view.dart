@@ -1,10 +1,7 @@
 import 'package:booknplay/Routes/routes.dart';
-import 'package:booknplay/Screens/Auth_Views/Login/login_view.dart';
 import 'package:booknplay/Screens/Auth_Views/Signup/signup_controller.dart';
 import 'package:booknplay/Utils/Colors.dart';
-import 'package:booknplay/Utils/extentions.dart';
 import 'package:booknplay/Widgets/app_button.dart';
-import 'package:booknplay/Widgets/auth_custom_design.dart';
 import 'package:booknplay/Widgets/commen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

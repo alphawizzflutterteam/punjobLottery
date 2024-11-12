@@ -72,10 +72,11 @@ class _Otp extends State<DeleteOTPVerificationScreen> {
                 ),
                 // controller.otp == "null" ?
                 // Text('OTP: ',style: const TextStyle(fontSize: 20,color: AppColors.whit),):
-                Text(
-                  'OTP: ${widget.otp}',
-                  style: const TextStyle(fontSize: 20, color: AppColors.whit),
-                ),
+
+                // Text(
+                //   'OTP: ${widget.otp}',
+                //   style: const TextStyle(fontSize: 20, color: AppColors.whit),
+                // ),
 
                 const SizedBox(
                   height: 50,
