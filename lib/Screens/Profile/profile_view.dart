@@ -7,6 +7,7 @@ import 'package:booknplay/Screens/Profile/profile_controller.dart';
 import 'package:booknplay/Screens/Withdrawal/withdrawal_view.dart';
 import 'package:booknplay/Utils/Colors.dart';
 import 'package:booknplay/Utils/custom_clip_path.dart';
+import 'package:booknplay/Utils/manageUserStatus.dart';
 import 'package:booknplay/Widgets/commen_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // TODO: implement initState
     super.initState();
     referCode();
+    ManageUserStatus.getProfileAndCheckUserStatus();
     // getUser();
   }
 
@@ -75,8 +77,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var result = await response.stream.bytesToString();
+
+      print(json.decode(result));
       var finalResult = GetProfileModel.fromJson(json.decode(result));
 
+      if (finalResult.profile != null && finalResult.profile!.status == '0') {
+        await SharedPre.clear('userId');
+        await Future.delayed(const Duration(milliseconds: 500));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) =>
+        //             const LoginScreen()));
+        Get.offAllNamed(loginScreen);
+      }
       setState(() {
         getProfileModel = finalResult;
 
@@ -346,14 +360,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         ),
                                                         Row(
                                                           children: [
-                                                            Image.asset(
-                                                              "assets/images/Balance.png",
-                                                              height: 20,
-                                                              color: AppColors
-                                                                  .profileColor,
-                                                            ),
+                                                            // Image.asset(
+                                                            //   "assets/images/Balance.png",
+                                                            //   height: 20,
+                                                            //   color: AppColors
+                                                            //       .profileColor,
+                                                            // ),
                                                             const SizedBox(
-                                                                width: 5),
+                                                              height: 25,
+                                                              width: 10,
+                                                            ),
                                                             const Text(
                                                               "Balance : ",
                                                               style: TextStyle(
@@ -380,8 +396,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     const Icon(
                                                       Icons
                                                           .arrow_forward_ios_outlined,
-                                                      color:
-                                                          AppColors.greyColor,
+                                                      color: AppColors.black,
                                                       size: 17,
                                                     ),
                                                   ],
@@ -561,7 +576,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               const Icon(
                                                 Icons
                                                     .arrow_forward_ios_outlined,
-                                                color: AppColors.greyColor,
+                                                color: AppColors.black,
                                                 size: 17,
                                               )
                                             ],
@@ -619,7 +634,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               const Icon(
                                                 Icons
                                                     .arrow_forward_ios_outlined,
-                                                color: AppColors.greyColor,
+                                                color: AppColors.black,
                                                 size: 17,
                                               )
                                             ],
@@ -725,7 +740,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               const Icon(
                                                 Icons
                                                     .arrow_forward_ios_outlined,
-                                                color: AppColors.greyColor,
+                                                color: AppColors.black,
                                                 size: 17,
                                               )
                                             ],
@@ -822,7 +837,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],
@@ -870,7 +885,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],
@@ -918,7 +933,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],
@@ -968,7 +983,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],
@@ -1016,7 +1031,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],
@@ -1064,7 +1079,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],
@@ -1112,7 +1127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],
@@ -1159,7 +1174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Icon(
                                           Icons.arrow_forward_ios_outlined,
-                                          color: AppColors.greyColor,
+                                          color: AppColors.black,
                                           size: 17,
                                         )
                                       ],

@@ -742,7 +742,7 @@ class _AddMoneyState extends State<AddMoney> {
                                     getFundModel!.addFund![i].name == ""
                                         ? Text("Name")
                                         : Text(
-                                            "${getFundModel!.addFund![i].name}"),
+                                            " Name : ${getFundModel!.addFund![i].name}"),
                                     getFundModel!.addFund![i].requestStatus ==
                                             '0'
                                         ? Text(
@@ -770,7 +770,7 @@ class _AddMoneyState extends State<AddMoney> {
                                   height: 5,
                                 ),
                                 Text(
-                                    " ₹${getFundModel!.addFund![i].requestAmount}"),
+                                    " Amount : ₹${getFundModel!.addFund![i].requestAmount}"),
                                 SizedBox(
                                   height: 5,
                                 ),

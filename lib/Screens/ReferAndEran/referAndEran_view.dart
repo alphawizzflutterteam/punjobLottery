@@ -47,10 +47,11 @@ class _ReferAndEranState extends State<ReferAndEran> {
       'Content-Type': 'application/json',
       'Cookie': 'ci_session=18afbdd33b04ace40a80944d83e9e23e3ab91c3e'
     };
-    var request = http.Request(
-        'POST', Uri.parse('$baseUrl1/Apicontroller/refererral_lists'));
-    request.body = json.encode({"referral_code": userReferCode});
-    print('_____request refer _____${request.body}_________');
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'https://punjablottery.online/Apicontroller/refererral_lists'));
+    request.fields.addAll({'referral_code': '72abbf4741aa'});
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -188,7 +189,7 @@ class _ReferAndEranState extends State<ReferAndEran> {
                         referEarnModel?.data?.length == null
                     ? const Center(
                         child: Text(
-                        "No Data Found",
+                        "No referral Found",
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ))
                     : Container(

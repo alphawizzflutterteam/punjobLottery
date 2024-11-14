@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:booknplay/Screens/Result/result_detaits_view.dart';
 import 'package:booknplay/Utils/Colors.dart';
+import 'package:booknplay/Utils/manageUserStatus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -23,6 +24,7 @@ class _ResultScreenState extends State<ResultScreen> {
     // TODO: implement initState
     super.initState();
     getUser();
+    ManageUserStatus.getProfileAndCheckUserStatus();
   }
 
   @override
@@ -58,7 +60,7 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
         ),
         body: userId == 'userId'
-        // body: userId == '71'
+            // body: userId == '71'
             ? Center(
                 child: Text("No data Found"),
               )
@@ -254,12 +256,12 @@ class _ResultScreenState extends State<ResultScreen> {
     userId = await SharedPre.getStringValue('userId');
     getResultDetails();
   }
+
   GetResultModel? getResultModel;
   getResultDetails() async {
-    var headers = {
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request('POST', Uri.parse('https://punjablottery.online/Apicontroller/getResults'));
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('POST',
+        Uri.parse('https://punjablottery.online/Apicontroller/getResults'));
     request.body = json.encode({
       "user_id": userId,
     });
@@ -271,7 +273,8 @@ class _ResultScreenState extends State<ResultScreen> {
       setState(() {
         getResultModel = finalResult;
       });
-      print("aaaaaaaaaaaaaa_____________${getResultModel?.data?.lotteries?.length}");
+      print(
+          "aaaaaaaaaaaaaa_____________${getResultModel?.data?.lotteries?.length}");
       Fluttertoast.showToast(msg: "${finalResult.msg}");
     } else {
       print(response.reasonPhrase);
