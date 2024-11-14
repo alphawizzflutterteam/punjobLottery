@@ -178,10 +178,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                           ),
                                           SizedBox(height: 5),
                                           Text(
-                                              "${getTransaction1Model!.walletTransaction![i].transactionNote}"),
+                                              "Message:${getTransaction1Model!.walletTransaction![i].transactionNote}"),
                                           SizedBox(height: 5),
                                           Text(
-                                              " ${getTransaction1Model!.walletTransaction![i].gameName}"),
+                                              "Lottery Name: ${getTransaction1Model!.walletTransaction![i].gameName}"),
                                           SizedBox(height: 5),
                                         ],
                                       ),

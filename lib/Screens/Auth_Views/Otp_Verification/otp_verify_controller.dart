@@ -55,7 +55,8 @@ class OTPVerifyController extends AppBaseController {
     update();
     var param = {
       'mobile': data[0].toString(),
-      'app_key': "#63Y@#)KLO57991(\$457D9(JE4dY3d2250f\$%#(mhgamesapp!xyz!punjablottery)8fm834(HKU8)5grefgr48mg1"
+      'app_key':
+          "#63Y@#)KLO57991(\$457D9(JE4dY3d2250f\$%#(mhgamesapp!xyz!punjablottery)8fm834(HKU8)5grefgr48mg1"
     };
     apiBaseHelper.postAPICall(sendOTPAPI, param).then((getData) {
       bool status = getData['status'];
@@ -75,6 +76,7 @@ class OTPVerifyController extends AppBaseController {
       'mobile': data[0].toString(),
       'otp': otp,
     };
+    print("ANjali delete otp____${param}");
     apiBaseHelper
         .postAPICall(Uri.parse('$baseUrl/Apicontroller/deleteotpVerify'), param)
         .then((getData) async {

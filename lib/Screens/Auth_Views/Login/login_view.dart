@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: WillPopScope(
             onWillPop: () async {
               SystemNavigator.pop();
-              return true; // This line is necessary to avoid a lint warning
+              return true;
             },
             child: Container(
               height: MediaQuery.of(context).size.height,

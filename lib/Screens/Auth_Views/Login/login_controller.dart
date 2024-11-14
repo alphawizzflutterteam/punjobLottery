@@ -52,7 +52,9 @@ class LoginController extends AppBaseController {
       'password': password,
       'device_key': '9638528510',
     };
+    print("anjali login__________${param}");
     apiBaseHelper.postAPICall(getUserLogin, param).then((getData) async {
+      print("Login api_____${apiBaseHelper}");
       bool error = getData['status'];
       String msg = getData['message'];
 
