@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:booknplay/Screens/ReferAndEran/referAndearnList.dart';
 import 'package:booknplay/Utils/Colors.dart';
 import 'package:booknplay/Widgets/app_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,9 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_share/flutter_share.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../Local_Storage/shared_pre.dart';
-import '../../Models/HomeModel/lottery_list_model.dart';
 import '../../Models/ReferEarnModel.dart';
-import '../../Services/api_services/apiConstants.dart';
 
 class ReferAndEran extends StatefulWidget {
   const ReferAndEran({
@@ -173,84 +171,55 @@ class _ReferAndEranState extends State<ReferAndEran> {
                   },
                 ),
                 SizedBox(height: 10),
-                AppButton(
-                  onTap: () {
-                    // var str =
-                    //     "$appName\nRefer Code:$""\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n\n${getTranslated(context, 'IOSLBL')}\n$iosLink$iosPackage";
-                    // Share.share(mobile ?? "");
-                    share(referCode: userReferCode);
-                  },
-                  title: "Share",
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        onTap: () {
+                          share(referCode: userReferCode);
+                        },
+                        title: "Share",
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: AppButton(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ReferAndEarnList(
+                                        referCode: '$userReferCode',
+                                      )));
+                        },
+                        title: "Referral List",
+                      ),
+                    ),
+                  ],
                 ),
+
+                // AppButton(
+                //   onTap: () {
+                //     share(referCode: userReferCode);
+                //   },
+                //   title: "Share",
+                // ),
+                // SizedBox(height: 10),
+                // AppButton(
+                //   onTap: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => ReferAndEarnList(
+                //                   referCode: '$userReferCode',
+                //                 )));
+                //   },
+                //   title: "Referral List",
+                // ),
                 SizedBox(
                   height: 10,
                 ),
-                referEarnModel?.data?.length == 0 ||
-                        referEarnModel?.data?.length == null
-                    ? const Center(
-                        child: Text(
-                        "No referral Found",
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ))
-                    : Container(
-                        height: 500,
-                        child: ListView.builder(
-                          itemCount: referEarnModel?.data?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              margin: const EdgeInsets.all(8.0),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  children: [
-                                    // Image on the left side
-                                    // Text content (time, name, text)
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            referEarnModel
-                                                    ?.data?[index].insertDate ??
-                                                "",
-                                            style: const TextStyle(
-                                                color: Colors.grey),
-                                          ),
-                                          SizedBox(height: 5.0),
-                                          Text(
-                                            referEarnModel
-                                                    ?.data?[index].userName ??
-                                                "",
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16.0,
-                                            ),
-                                          ),
-                                          SizedBox(height: 5.0),
-                                          Text(referEarnModel
-                                                  ?.data?[index].mobile ??
-                                              ""),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-
-                // SimBtn(
-                //   size: 0.8,
-                //   title: "Share",
-                //   onBtnSelected: () {
-                //     var str =
-                //         "$appName\nRefer Code:$"REFER_CODE"\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n\n${getTranslated(context, 'IOSLBL')}\n$iosLink$iosPackage";
-                //     Share.share(str);
-                //   },
-                // ),
               ],
             ),
           ),

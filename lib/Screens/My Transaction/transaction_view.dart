@@ -157,7 +157,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            " ₹${getTransaction1Model!.walletTransaction![i].amount}",
+                                            "₹${getTransaction1Model!.walletTransaction![i].amount}",
                                             style: TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.w600,
@@ -171,10 +171,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                           ),
                                           SizedBox(height: 5),
                                           Text(
-                                              " ID : ${getTransaction1Model!.walletTransaction![i].transactionId}"),
+                                              "ID : ${getTransaction1Model!.walletTransaction![i].transactionId}"),
                                           SizedBox(height: 5),
                                           Text(
-                                            " Date : ${getTransaction1Model!.walletTransaction![i].insertDate != null ? DateFormat('dd-MM-yyyy').format(DateTime.parse(getTransaction1Model!.walletTransaction![i].insertDate!)) : 'N/A'}",
+                                            "Date : ${getTransaction1Model!.walletTransaction![i].insertDate != null ? DateFormat('dd-MM-yyyy').format(DateTime.parse(getTransaction1Model!.walletTransaction![i].insertDate!)) : 'N/A'}",
                                           ),
                                           SizedBox(height: 5),
                                           Text(
