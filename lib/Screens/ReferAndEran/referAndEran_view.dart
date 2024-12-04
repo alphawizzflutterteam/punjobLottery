@@ -29,10 +29,12 @@ class _ReferAndEranState extends State<ReferAndEran> {
     getMobile();
   }
 
-  String? mobile, userReferCode;
+  String? mobile, userReferCode, referBalance;
   getMobile() async {
     mobile = await SharedPre.getStringValue('userMobile');
     userReferCode = await SharedPre.getStringValue('userReferCode');
+    // referBalance = await SharedPre.getStringValue('referBalance');
+    // print("referbalance ${referBalance}");
     setState(() {});
     getReferEarn();
   }
@@ -49,7 +51,8 @@ class _ReferAndEranState extends State<ReferAndEran> {
         'POST',
         Uri.parse(
             'https://punjablottery.online/Apicontroller/refererral_lists'));
-    request.fields.addAll({'referral_code': '72abbf4741aa'});
+    request.fields.addAll({'referral_code': userReferCode.toString()});
+    print("get refer list ${request.fields}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -114,11 +117,12 @@ class _ReferAndEranState extends State<ReferAndEran> {
                         .copyWith(color: AppColors.fntClr),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    "Invite your friends to join and get the reward as soon as your friend first order placed",
+                    "Invite your friends to join and get the reward as soon as your friend first order placed will get this amount ${referEarnModel?.refAmount}",
                     textAlign: TextAlign.center,
+                    style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ),
                 const Padding(
@@ -140,10 +144,10 @@ class _ReferAndEranState extends State<ReferAndEran> {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "$userReferCode",
-                        style: TextStyle(color: AppColors.fntClr),
+                        style: const TextStyle(color: AppColors.fntClr),
                       ),
                     ),
                   ),
@@ -151,11 +155,11 @@ class _ReferAndEranState extends State<ReferAndEran> {
                 CupertinoButton(
                   padding: EdgeInsets.zero,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    decoration: BoxDecoration(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    decoration: const BoxDecoration(
                         color: AppColors.activeBorder,
-                        borderRadius:
-                            BorderRadius.all(const Radius.circular(4.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(4.0))),
                     child: const Text(
                       "Tap to copy",
                       textAlign: TextAlign.center,
@@ -187,11 +191,13 @@ class _ReferAndEranState extends State<ReferAndEran> {
                       child: AppButton(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ReferAndEarnList(
-                                        referCode: '$userReferCode',
-                                      )));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReferAndEarnList(
+                                referCode: '$userReferCode',
+                              ),
+                            ),
+                          );
                         },
                         title: "Referral List",
                       ),
@@ -234,7 +240,7 @@ class _ReferAndEranState extends State<ReferAndEran> {
     await FlutterShare.share(
         title: 'Refer and Eran',
         text:
-            'Download Punjab lottery from the invite code below and sign up with the referral code $referCode',
+            'Download Punjab lottery from the invite code below and sign up with the referral code $referCode and amount ${referEarnModel?.refAmount}',
         linkUrl:
             'https://play.google.com/store/apps/details?id=com.punjab&pcampaignid=web_share&pli=1',
         chooserTitle: 'Example Chooser Title');

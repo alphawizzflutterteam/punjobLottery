@@ -2,8 +2,9 @@ class ReferEarnModel {
   String? msg;
   bool? status;
   List<Data>? data;
+  String? refAmount;
 
-  ReferEarnModel({this.msg, this.status, this.data});
+  ReferEarnModel({this.msg, this.status, this.data, this.refAmount});
 
   ReferEarnModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
@@ -14,6 +15,7 @@ class ReferEarnModel {
         data!.add(new Data.fromJson(v));
       });
     }
+    refAmount = json['ref_amount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class ReferEarnModel {
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
+    data['ref_amount'] = this.refAmount;
     return data;
   }
 }
@@ -37,11 +40,11 @@ class Data {
 
   Data(
       {this.userId,
-      this.userName,
-      this.mobile,
-      this.insertDate,
-      this.referredBy,
-      this.referralCode});
+        this.userName,
+        this.mobile,
+        this.insertDate,
+        this.referredBy,
+        this.referralCode});
 
   Data.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];

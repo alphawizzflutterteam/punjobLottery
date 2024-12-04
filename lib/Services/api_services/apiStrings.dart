@@ -17,9 +17,6 @@ final Uri getResultAPI = Uri.parse('${baseUrl}Apicontroller/getResults');
 final Uri getProfileAPI = Uri.parse('${baseUrl}Apicontroller/apiGetProfile');
 final Uri getTransactionHistoryAPI = Uri.parse('${baseUrl}apiUserWithdrawTransactionHistory');
 
-
-
-
 final Uri getCountry = Uri.parse('${baseUrl}get_countries');
 final Uri getSate= Uri.parse('${baseUrl}get_states');
 final Uri getUserLogin= Uri.parse('${baseUrl}login');
